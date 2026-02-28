@@ -1,5 +1,5 @@
 import { Page, expect } from '@playwright/test';
-import { LocationCheck } from './LocationCheck';
+import { LocationCheck } from './components/LocationCheck';
 
 export class Rooms {
     private page: Page;

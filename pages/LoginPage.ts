@@ -1,6 +1,6 @@
 import { Page, expect } from '@playwright/test';
 
-export class LoginNew {
+export class LoginPage {
     private page: Page;
 
     constructor(page: Page) {
