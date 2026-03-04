@@ -10,3 +10,5 @@ test('Verify room clicks for all locations', async ({ page, loginPage, roomsPage
 
     console.log('Test: Verify room clicks for all locations - Completed');
 });
+
+

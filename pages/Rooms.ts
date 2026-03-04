@@ -18,6 +18,7 @@ export class Rooms {
 
         const locationRoomIds: Record<string, string[]> = {};
 
+
         for (let i = 0; i < lengthLoc; i++) {
             const locName = apiLocations[i];
             const locId = locationIds[i];
@@ -134,10 +135,10 @@ export class Rooms {
 
             // ================= NAVIGATE TO DEVICES =================
 
-            const deviceTab = this.page.locator(
-                "(//button[contains(@class,'optsel')])[3]"
-            );
-
+            // const deviceTab = this.page.locator(
+            //     "(//button[contains(@class,'optsel')])[3]"
+            // );
+ const deviceTab = this.page.locator('button.optsel').nth(2);
             await deviceTab.waitFor({ state: 'visible' });
             await deviceTab.click();
         // await this.page.waitForTimeout(1000);
@@ -146,15 +147,13 @@ export class Rooms {
             const roomHeaders = this.page.locator(
                 "//mat-expansion-panel-header[starts-with(@id,'mat-expansion-panel-header')]"
             );
-
-            // wait safely (handle no rooms case)
-            await this.page.waitForTimeout(1000);
-
+            await expect(roomHeaders.first()).toBeVisible();
             const uiRoomCount = await roomHeaders.count();
 
             console.log(
                 `📊 Location: ${locName} | API: ${roomIdsList.length} | UI: ${uiRoomCount}`
             );
+            await expect(uiRoomCount).toBe(roomIdsList.length);
 
             // ================= HANDLE NO ROOMS =================
 
@@ -170,6 +169,7 @@ export class Rooms {
             // }
 
             // ================= CLICK EACH ROOM =================
+            // await this.page.waitForLoadState('networkidle');
 
             for (let idx = 0; idx < uiRoomCount; idx++) {
                 try {
