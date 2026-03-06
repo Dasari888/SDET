@@ -49,9 +49,9 @@ def check_ui_against_api(driver, response):
 
     # Compare location name
     if ui_value == api_location_name:
-        print(f"✅ Match: UI value '{ui_value}' equals API value '{api_location_name}'")
+        print(f" Match: UI value '{ui_value}' equals API value '{api_location_name}'")
     else:
-        print(f"❌ Mismatch: UI value '{ui_value}' != API value '{api_location_name}'")
+        print(f"Mismatch: UI value '{ui_value}' != API value '{api_location_name}'")
 
     # --- Country check ---
     try:
@@ -67,12 +67,12 @@ def check_ui_against_api(driver, response):
         ui_country_value = ui_country_element.text.strip()
 
         if ui_country_value == api_location_country:
-            print(f"✅ Country Match: UI value '{ui_country_value}' equals API value '{api_location_country}'")
+            print(f" Country Match: UI value '{ui_country_value}' equals API value '{api_location_country}'")
         else:
-            print(f"❌ Country Mismatch: UI value '{ui_country_value}' != API value '{api_location_country}'")
+            print(f"Country Mismatch: UI value '{ui_country_value}' != API value '{api_location_country}'")
 
     except Exception as e:
-        print(f"❌ Could not find country element in UI: {e}")
+        print(f"Could not find country element in UI: {e}")
 
     # --- Timezone check ---
     try:
@@ -89,12 +89,12 @@ def check_ui_against_api(driver, response):
         ui_timezone_value = ui_timezone_element.text.strip()
 
         if ui_timezone_value == api_loc_cid_tid:
-            print(f"✅ Timezone Match: UI value '{ui_timezone_value}' equals API value '{api_loc_cid_tid}'")
+            print(f" Timezone Match: UI value '{ui_timezone_value}' equals API value '{api_loc_cid_tid}'")
         else:
-            print(f"❌ Timezone Mismatch: UI value '{ui_timezone_value}' != API value '{api_loc_cid_tid}'")
+            print(f"Timezone Mismatch: UI value '{ui_timezone_value}' != API value '{api_loc_cid_tid}'")
 
     except Exception as e:
-        print(f"❌ Could not find timezone element in UI: {e}")
+        print(f"Could not find timezone element in UI: {e}")
     
     # --- Energy In (Cost per KWh) check ---
     try:
@@ -117,9 +117,9 @@ def check_ui_against_api(driver, response):
 
     # Compare API vs UI values
     if ui_value.strip() == energy_in_value.strip():
-        print(f"✅ Match: UI value '{ui_value}' equals API value '{energy_in_value}'")
+        print(f" Match: UI value '{ui_value}' equals API value '{energy_in_value}'")
     else:
-        print(f"❌ Mismatch: UI value '{ui_value}' != API value '{energy_in_value}'")
+        print(f"Mismatch: UI value '{ui_value}' != API value '{energy_in_value}'")
 
     # --- Feed In Tariff check ---
     try:
@@ -142,9 +142,9 @@ def check_ui_against_api(driver, response):
 
     # Compare API vs UI values
     if ui_value.strip() == energy_in_value.strip():
-        print(f"✅ Match: feed in tariff value '{ui_value}' equals API value '{energy_in_value}'")
+        print(f" Match: feed in tariff value '{ui_value}' equals API value '{energy_in_value}'")
     else:
-        print(f"❌ Mismatch: feed in tariff value '{ui_value}' != API value '{energy_in_value}'")
+        print(f"Mismatch: feed in tariff value '{ui_value}' != API value '{energy_in_value}'")
 
     # --- Trees per kWh check ---
     try:
@@ -175,9 +175,9 @@ def check_ui_against_api(driver, response):
 
     # Compare API vs UI values
     if ui_value.strip() == env_in_value.strip():
-        print(f"✅ Match: No. of trees per kWh '{ui_value}' equals API value '{env_in_value}'")
+        print(f" Match: No. of trees per kWh '{ui_value}' equals API value '{env_in_value}'")
     else:
-        print(f"❌ Mismatch: No. of trees per kWh '{ui_value}' != API value '{env_in_value}'")
+        print(f"Mismatch: No. of trees per kWh '{ui_value}' != API value '{env_in_value}'")
 
     # --- HC Date Toggle check ---
     try:
@@ -200,17 +200,17 @@ def check_ui_against_api(driver, response):
         # Compare API vs UI state
         if enabled_flag == "1":
             if is_enabled_in_ui:
-                print("✅ hc_date toggle is ENABLED in UI and API matches")
+                print(" hc_date toggle is ENABLED in UI and API matches")
             else:
-                print("❌ hc_date toggle is NOT enabled in UI but API says enabled")
+                print("hc_date toggle is NOT enabled in UI but API says enabled")
         else:
             if not is_enabled_in_ui:
-                print("✅ hc_date toggle is DISABLED in UI and API matches")
+                print(" hc_date toggle is DISABLED in UI and API matches")
             else:
-                print("❌ hc_date toggle is ENABLED in UI but API says disabled")
+                print("hc_date toggle is ENABLED in UI but API says disabled")
 
     except Exception as e:
-        print(f"⚠️ Error checking hc_date toggle: {e}")
+        print(f" Error checking hc_date toggle: {e}")
 
     # --- Temperature check ---
     try:
@@ -233,12 +233,12 @@ def check_ui_against_api(driver, response):
         ui_text = ui_element.text.strip()
 
         if ui_text == expected_text_t:
-            print(f"✅ Match: UI value '{ui_text}' equals expected value '{expected_text_t}'")
+            print(f" Match: UI value '{ui_text}' equals expected value '{expected_text_t}'")
         else:
-            print(f"❌ Mismatch: UI value '{ui_text}' != expected value '{expected_text_t}'")
+            print(f"Mismatch: UI value '{ui_text}' != expected value '{expected_text_t}'")
 
     except Exception as e:
-        print(f"❌ Could not verify dropdown label text: {e}")
+        print(f"Could not verify dropdown label text: {e}")
 
     # --- Savings Type check (CO₂ vs Trees) ---
     try:
@@ -263,18 +263,18 @@ def check_ui_against_api(driver, response):
         ui_text = ui_element.text.strip()
 
         if ui_text.lower() == expected_text_sav.lower():
-            print(f"✅ Match: UI value '{ui_text}' equals expected value '{expected_text_sav}'")
+            print(f" Match: UI value '{ui_text}' equals expected value '{expected_text_sav}'")
         else:
-            print(f"❌ Mismatch: UI value '{ui_text}' != expected value '{expected_text_sav}'")
+            print(f"Mismatch: UI value '{ui_text}' != expected value '{expected_text_sav}'")
 
     except Exception as e:
-        print(f"❌ Could not verify dropdown label text: {e}")
+        print(f"Could not verify dropdown label text: {e}")
 
     # --- Cost In check ---
     try:
         show_cost_in = response["location_settings"]["data"]["cost_in"]
     except KeyError:
-        print("❌ 'cost_in' not found in API response.")
+        print("'cost_in' not found in API response.")
         return False
 
     try:
@@ -286,14 +286,14 @@ def check_ui_against_api(driver, response):
         ui_text = ui_element.text.strip()
 
         if ui_text == show_cost_in:
-            print(f"✅ Match: UI value '{ui_text}' equals expected '{show_cost_in}'")
+            print(f" Match: UI value '{ui_text}' equals expected '{show_cost_in}'")
         else:
-            print(f"❌ Mismatch: UI value '{ui_text}' != expected '{show_cost_in}'")
+            print(f"Mismatch: UI value '{ui_text}' != expected '{show_cost_in}'")
 
     except TimeoutException:
-        print(f"❌ Could not find UI element with text containing '{show_cost_in}' within timeout.")
+        print(f"Could not find UI element with text containing '{show_cost_in}' within timeout.")
     except Exception as e:
-        print(f"❌ Error verifying 'cost_in' in UI: {e}")
+        print(f"Error verifying 'cost_in' in UI: {e}")
 
     # --- Fuel check ---
     try:
@@ -316,12 +316,12 @@ def check_ui_against_api(driver, response):
         ui_text = ui_element.text.strip()
 
         if ui_text.lower() == expected_text_fuel.lower():
-            print(f"✅ Match: Fuel UI value '{ui_text}' equals expected value '{expected_text_fuel}'")
+            print(f" Match: Fuel UI value '{ui_text}' equals expected value '{expected_text_fuel}'")
         else:
-            print(f"❌ Mismatch: Fuel UI value '{ui_text}' != expected value '{expected_text_fuel}'")
+            print(f"Mismatch: Fuel UI value '{ui_text}' != expected value '{expected_text_fuel}'")
 
     except Exception as e:
-        print(f"❌ Could not verify dropdown label text: {e}")
+        print(f"Could not verify dropdown label text: {e}")
 
     # --- Device State Retain check ---
     try:
@@ -346,11 +346,11 @@ def check_ui_against_api(driver, response):
         ui_text = ui_element.text
 
         if ui_text == mode:
-            print(f"✅ Match: Device state retain UI value '{ui_text}' equals expected value '{mode}'")
+            print(f" Match: Device state retain UI value '{ui_text}' equals expected value '{mode}'")
         else:
-            print(f"❌ DeviceState Retain Mismatch: UI value '{ui_text}' != expected value '{mode}'")
+            print(f"DeviceState Retain Mismatch: UI value '{ui_text}' != expected value '{mode}'")
 
     except Exception as e:
-        print(f"❌ Could not verify dropdown label text: {e}")
+        print(f"Could not verify dropdown label text: {e}")
 
     return True

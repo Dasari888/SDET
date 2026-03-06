@@ -18,7 +18,7 @@ CLIENT_SECRET = "ee6f26b1ff78c74898c99cfc64f0e7015f564822"
 
 
 def login_and_get_code():
-    print("\n🔐 Calling Login API...")
+    print("\n Calling Login API...")
     
     payload = {
         "email_id": email_id,
@@ -39,24 +39,24 @@ def login_and_get_code():
         timeout=15
     )
     
-    print("📥 Status Code:", response.status_code)
-    print("📥 Raw Response:", response.text)
+    print(" Status Code:", response.status_code)
+    print(" Raw Response:", response.text)
     
     if response.status_code != 200:
-        sys.exit("❌ Login API HTTP failure")
+        sys.exit("Login API HTTP failure")
     
     data = response.json()
     if data.get("status") != 1:
-        sys.exit(f"❌ Login failed: {data.get('message')}")
+        sys.exit(f"Login failed: {data.get('message')}")
     
     if "code" not in data:
-        sys.exit("❌ Authorization code not found in response")
+        sys.exit("Authorization code not found in response")
     
-    print("✅ Authorization Code:", data["code"])
+    print(" Authorization Code:", data["code"])
     return data["code"]
 
 def exchange_code_for_token(auth_code):
-    print("\n🔁 Calling Token API...")
+    print("\n Calling Token API...")
     
     headers = {
         "Accept": "*/*",
@@ -68,15 +68,15 @@ def exchange_code_for_token(auth_code):
     
     response = requests.post(TOKEN_API, headers=headers, timeout=15)
     
-    print("📥 Status Code:", response.status_code)
-    print("📥 Raw Response:", response.text)
+    print(" Status Code:", response.status_code)
+    print(" Raw Response:", response.text)
     
     if response.status_code != 200:
-        sys.exit("❌ Token API HTTP failure")
+        sys.exit("Token API HTTP failure")
     
     data = response.json()
     if data.get("status") != 1:
-        sys.exit(f"❌ Token API failed: {data.get('message')}")
+        sys.exit(f"Token API failed: {data.get('message')}")
     
     return data
 
@@ -84,5 +84,5 @@ if __name__ == "__main__":
     auth_code = login_and_get_code()
     token_data = exchange_code_for_token(auth_code)
     
-    print("\n🎉 ACCESS TOKEN :", token_data.get("access_token"))
-    print("🔄 REFRESH TOKEN:", token_data.get("refresh_token"))
+    print("\nACCESS TOKEN :", token_data.get("access_token"))
+    print(" REFRESH TOKEN:", token_data.get("refresh_token"))

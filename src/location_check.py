@@ -185,4 +185,4 @@ def check_locations(driver, headers, Base_url):
         except Exception as e:
             print(f"Could not click on location '{loc_name}': {e}")
 
-    print("\n🎯 LOCATION VALIDATION COMPLETED")
+    print("\nLOCATION VALIDATION COMPLETED")

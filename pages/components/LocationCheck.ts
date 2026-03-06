@@ -93,9 +93,9 @@ export class LocationCheck {
 
         // Name check
         const uiNameEl = this.page.locator("//input[@type='text']").first();
-        console.log("⏳ Waiting for profile name to match:", name);
+        console.log(" Waiting for profile name to match:", name);
         await expect(uiNameEl).toHaveValue(name, { timeout: 10000 });
-        console.log("✅ API name matches with profile name:", name);
+        console.log(" API name matches with profile name:", name);
 
         // Email check
         await this.page.locator("//*[name()='circle' and @id='Ellipse_210']").click();

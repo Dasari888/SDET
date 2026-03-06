@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// ✅ FAIL FAST
+//  FAIL FAST
 if (!process.env.DEEPSEEK_API_KEY) {
-  throw new Error('❌ DEEPSEEK_API_KEY is not set');
+  throw new Error('DEEPSEEK_API_KEY is not set');
 }
 
 const client = new OpenAI({
@@ -15,7 +15,7 @@ const client = new OpenAI({
 });
 
 /**
- * ✅ Proper recursive failure extractor
+ *  Proper recursive failure extractor
  */
 function extractFailures(report: any): string[] {
   const failures: string[] = [];
@@ -58,7 +58,7 @@ async function analyzeFailures() {
     const failures = extractFailures(report);
 
     if (failures.length === 0) {
-      console.log('✅ No failures to analyze');
+      console.log(' No failures to analyze');
       return;
     }
 
@@ -94,7 +94,7 @@ ${failures.join('\n\n')}
     console.log(response.choices[0].message.content);
 
   } catch (err) {
-    console.error('❌ Analyzer error:', err);
+    console.error('Analyzer error:', err);
   }
 
 }

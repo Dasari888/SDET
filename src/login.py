@@ -7,15 +7,15 @@ def login_and_get_token(driver, uname, pword):
     utils = ActionDriver(driver)
 
     try:
-        print("🔐 Logging in")
+        print(" Logging in")
 
         # Enter email
         utils.safe_send_keys((By.XPATH, "//input[@id='mat-input-0']"), uname)
-        print("✅ Email entered")
+        print(" Email entered")
 
         # Click first login button
         utils.safe_click((By.XPATH, "//input[@value='Login']"))
-        print("✅ Clicked first login button")
+        print(" Clicked first login button")
         import time
         time.sleep(2)  # Give time for the password field to appear
 
@@ -35,17 +35,17 @@ def login_and_get_token(driver, uname, pword):
         
         for locator in password_locators:
             try:
-                print(f"⏳ Waiting for password field with: {locator}")
+                print(f" Waiting for password field with: {locator}")
                 # First wait for presence, then visibility
                 password_field = utils.wait_for_presence(locator, timeout=30)
                 # Additional wait to ensure it's visible and enabled
                 utils.wait().until(
                     lambda d: password_field.is_displayed() and password_field.is_enabled()
                 )
-                print(f"✅ Found password field with: {locator}")
+                print(f" Found password field with: {locator}")
                 break
             except Exception as e:
-                print(f"⚠️ Password field not found with {locator}: {e}")
+                print(f" Password field not found with {locator}: {e}")
                 continue
         
         if not password_field:
@@ -54,15 +54,15 @@ def login_and_get_token(driver, uname, pword):
         # Enter password
         password_field.clear()
         password_field.send_keys(pword)
-        print("✅ Password entered")
+        print(" Password entered")
 
         # Click final login
         utils.safe_click((By.XPATH, "//button[normalize-space()='Login']"))
-        print("✅ Clicked final login button")
+        print(" Clicked final login button")
 
         # Wait for dashboard load (Location text)
         utils.wait_for_visibility((By.XPATH, "//*[contains(text(),'Location')]"))
-        print("✅ Dashboard loaded (Location text found)")
+        print(" Dashboard loaded (Location text found)")
 
         # Wait for token to be available in localStorage
         utils.wait().until(
@@ -87,7 +87,7 @@ def login_and_get_token(driver, uname, pword):
             "access_token": access_token
         }
 
-        print("✅ Login successful")
+        print(" Login successful")
 
         return headers
 
