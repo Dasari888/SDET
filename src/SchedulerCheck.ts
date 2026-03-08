@@ -39,7 +39,7 @@ export class SchedulerCheck {
             const uiLocInput = this.page.locator("//div[@class='abc']//div[1]//div[2]//input[1]");
             const uiValue = await uiLocInput.getAttribute("placeholder") || await uiLocInput.getAttribute("value");
             expect(uiValue).toBe(apiLocName);
-            console.log(`✅ Location Match: ${uiValue}`);
+            console.log(` Location Match: ${uiValue}`);
         }
 
         // Country
@@ -47,7 +47,7 @@ export class SchedulerCheck {
         if (apiCountry) {
             const uiCountry = this.page.locator(`//div[normalize-space()='${apiCountry}']`);
             await expect(uiCountry).toBeVisible();
-            console.log(`✅ Country Match: ${apiCountry}`);
+            console.log(` Country Match: ${apiCountry}`);
         }
 
         // Timezone
@@ -57,7 +57,7 @@ export class SchedulerCheck {
             const fullTz = `${apiTzName} (${apiGmt})`;
             const uiTz = this.page.locator("//div[7]//div[2]");
             await expect(uiTz).toHaveText(fullTz);
-            console.log(`✅ Timezone Match: ${fullTz}`);
+            console.log(` Timezone Match: ${fullTz}`);
         }
 
         // Energy Cost
@@ -67,7 +67,7 @@ export class SchedulerCheck {
             const uiEnergy = this.page.locator("//div[8]//div[2]//input[1]");
             const uiValue = await uiEnergy.getAttribute("placeholder") || await uiEnergy.getAttribute("value");
             expect(uiValue?.trim()).toBe(energyValue.trim());
-            console.log(`✅ Energy Match: ${energyValue}`);
+            console.log(` Energy Match: ${energyValue}`);
         }
 
         // Notify Me Toggle (app_notify)
@@ -78,7 +78,7 @@ export class SchedulerCheck {
             const isChecked = await toggle.getAttribute("aria-checked") === "true";
             const apiEnabled = enabledFlag === "1";
             expect(isChecked).toBe(apiEnabled);
-            console.log(`✅ Notify Me Match: ${apiEnabled ? "Enabled" : "Disabled"}`);
+            console.log(` Notify Me Match: ${apiEnabled ? "Enabled" : "Disabled"}`);
         }
 
         return true;

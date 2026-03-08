@@ -87,17 +87,17 @@ def all_loc_notifyMe(driver, headers, Base_url):
             # Compare API vs UI
             if enabled_flag == "1":
                 if is_enabled_in_ui:
-                    print("✅ app_notify toggle is ENABLED in UI and API matches")
+                    print(" app_notify toggle is ENABLED in UI and API matches")
                 else:
-                    print("❌ app_notify toggle is NOT enabled in UI but API says enabled")
+                    print("app_notify toggle is NOT enabled in UI but API says enabled")
             else:
                 if not is_enabled_in_ui:
-                    print("✅ app_notify toggle is DISABLED in UI and API matches")
+                    print(" app_notify toggle is DISABLED in UI and API matches")
                 else:
-                    print("❌ app_notify toggle is ENABLED in UI but API says disabled")
+                    print("app_notify toggle is ENABLED in UI but API says disabled")
 
         except Exception as e:
-            print(f"⚠️ Error checking app_notify toggle: {e}")
+            print(f" Error checking app_notify toggle: {e}")
 
         # Reopen profile menu for next location
         action.wait_after_action(
@@ -105,4 +105,4 @@ def all_loc_notifyMe(driver, headers, Base_url):
             wait_type="ajax"
         )
 
-    print("\n🎯 NOTIFY ME VALIDATION COMPLETED")
+    print("\nNOTIFY ME VALIDATION COMPLETED")

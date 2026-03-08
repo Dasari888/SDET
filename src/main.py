@@ -24,38 +24,38 @@ def main():
     service = Service(driver_path)
     driver = webdriver.Chrome(service=service)
 
-    # ✅ Initialize ActionDriver (GLOBAL helper)
+    #  Initialize ActionDriver (GLOBAL helper)
     action = ActionDriver(driver)
 
     try:
-        print("🚀 Launching application")
+        print(" Launching application")
         driver.get(BASE_URL)
         driver.maximize_window()
 
-        # ✅ Robust waits (NO sleep)
+        #  Robust waits (NO sleep)
         action.wait_for_page_load()
         action.wait_for_js_and_ajax()
 
-        # ✅ Login and fetch token
-        print("🔐 Logging in")
+        #  Login and fetch token
+        print(" Logging in")
         headers = login_and_get_token(driver, uname, pword)
 
-        # ✅ Post-login stabilization
+        #  Post-login stabilization
         action.wait_for_page_load()
         action.wait_for_js_and_ajax()
 
-        # ✅ Location validation
-        print("📍 Starting location validations")
+        #  Location validation
+        print(" Starting location validations")
         check_locations(driver, headers, BASE_URL)
 
         # all_loc_notifyMe(driver, headers, BASE_URL)
 
-        print("✅ Execution completed successfully")
+        print(" Execution completed successfully")
 
     except Exception as e:
-        # ❌ DO NOT call _fail() directly from here
+        # DO NOT call _fail() directly from here
         # Let this be a hard failure
-        print("❌ Execution failed:", e)
+        print("Execution failed:", e)
         raise
 
     finally:

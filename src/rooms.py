@@ -106,7 +106,7 @@ def room_click_count(driver, Base_url, headers):
             room_ids_list = []
             
             if rooms_data is None:
-                print(f"⚠️ 'data' field is null in API response for {loc_name}")
+                print(f" 'data' field is null in API response for {loc_name}")
             else:
                 room_details = []
                 rooms_list = []
@@ -138,13 +138,13 @@ def room_click_count(driver, Base_url, headers):
 
                 room_ids_list = room_details
             
-            print(f"📊 Location: {loc_name} | API Room Count (filtered): {len(room_ids_list)}")
+            print(f" Location: {loc_name} | API Room Count (filtered): {len(room_ids_list)}")
 
         except requests.RequestException as e:
-            print(f"❌ API Request failed for {loc_name}: {e}")
+            print(f"API Request failed for {loc_name}: {e}")
             room_ids_list = []
         except Exception as e:
-            print(f"❌ Error parsing rooms for {loc_name}: {e}")
+            print(f"Error parsing rooms for {loc_name}: {e}")
             import traceback
             traceback.print_exc()
             room_ids_list = []
@@ -155,7 +155,7 @@ def room_click_count(driver, Base_url, headers):
         time.sleep(1)
         # Devices button (user manually changed to index 2)
         action.wait_after_action(lambda: action.safe_click((By.XPATH, "(//button[@class='mat-tooltip-trigger py-3 optsel'])[2]")), wait_type="ajax")
-        print(f"⏳ Waiting for devices to load for {loc_name}...")
+        print(f" Waiting for devices to load for {loc_name}...")
         time.sleep(3) 
 
         # Count actual headers in UI (Visible only)
@@ -163,7 +163,7 @@ def room_click_count(driver, Base_url, headers):
         room_headers = [h for h in all_headers if h.is_displayed()]
         ui_room_count = len(room_headers)
         
-        print(f"📊 Location: {loc_name} | API Room Count: {len(room_ids_list)} | UI Room Count: {ui_room_count}")
+        print(f" Location: {loc_name} | API Room Count: {len(room_ids_list)} | UI Room Count: {ui_room_count}")
 
         if ui_room_count == 0:
             print(f"ℹ️ No room headers found in UI for location: {loc_name}")
@@ -173,7 +173,7 @@ def room_click_count(driver, Base_url, headers):
             continue
 
         # Click on each room dynamically based on UI count
-        print(f"🚀 Clicking through {ui_room_count} rooms found in UI for {loc_name}...")
+        print(f" Clicking through {ui_room_count} rooms found in UI for {loc_name}...")
         for idx in range(1, ui_room_count + 1):
             try:
                 room_header_xpath = f"(//mat-expansion-panel-header[starts-with(@id,'mat-expansion-panel-header')])[{idx}]"
@@ -184,12 +184,12 @@ def room_click_count(driver, Base_url, headers):
                 time.sleep(0.5)
                 driver.execute_script("arguments[0].click();", room_header)
                 
-                print(f"   ∟ ✅ Clicked Room {idx} for Location {loc_name}")
+                print(f"   ∟  Clicked Room {idx} for Location {loc_name}")
                 time.sleep(1) 
             except Exception as e:
-                print(f"   ∟ ❌ Failed to click Room {idx} for {loc_name}: {e}")
+                print(f"   ∟ Failed to click Room {idx} for {loc_name}: {e}")
 
         # After all rooms for this location are clicked, return to Home to reset the UI state
-        print(f"🏠 Completed rooms for {loc_name}. Returning to Home...")
+        print(f" Completed rooms for {loc_name}. Returning to Home...")
         action.wait_after_action(lambda: action.safe_click((By.XPATH, "(//button[@class='mat-tooltip-trigger py-3 optsel'])[1]")), wait_type="ajax")
         time.sleep(1)

@@ -41,7 +41,7 @@ export class Rooms {
                     : [];
 
             } catch (e) {
-                console.log(`❌ Error fetching rooms for ${locName}: ${e}`);
+                console.log(`Error fetching rooms for ${locName}: ${e}`);
                 locationRoomIds[locName] = [];
             }
         }
@@ -94,9 +94,9 @@ export class Rooms {
             // await radioBtn.scrollIntoViewIfNeeded();
             await radioBtn.click();
 
-            console.log(`✅ Selected location: ${locName}`);
+            console.log(` Selected location: ${locName}`);
 
-            // ✅ IMPORTANT: wait for UI refresh after location change
+            //  IMPORTANT: wait for UI refresh after location change
             await this.page.waitForLoadState('domcontentloaded');
 
             // ================= API VALIDATION =================
@@ -125,11 +125,11 @@ export class Rooms {
                 }
 
             } catch (e) {
-                console.log(`❌ Error parsing rooms for ${locName}: ${e}`);
+                console.log(`Error parsing rooms for ${locName}: ${e}`);
             }
 
             console.log(
-                `📊 Location: ${locName} | API Room Count: ${roomIdsList.length}`
+                ` Location: ${locName} | API Room Count: ${roomIdsList.length}`
             );
 
 
@@ -151,7 +151,7 @@ export class Rooms {
             const uiRoomCount = await roomHeaders.count();
 
             console.log(
-                `📊 Location: ${locName} | API: ${roomIdsList.length} | UI: ${uiRoomCount}`
+                ` Location: ${locName} | API: ${roomIdsList.length} | UI: ${uiRoomCount}`
             );
             await expect(uiRoomCount).toBe(roomIdsList.length);
 
@@ -178,19 +178,19 @@ export class Rooms {
                     await header.click();
 
                     console.log(
-                        `✅ Clicked Room ${idx + 1} for ${locName}`
+                        ` Clicked Room ${idx + 1} for ${locName}`
                     );
 
                 } catch (e) {
                     console.log(
-                        `❌ Failed Room ${idx + 1} for ${locName}: ${e}`
+                        `Failed Room ${idx + 1} for ${locName}: ${e}`
                     );
                 }
             }
 
             // ================= BACK TO Settings =================
 
-            console.log(`🏠 Returning to settings...`);
+            console.log(` Returning to settings...`);
             
 
             const homeTab = this.page.locator(
