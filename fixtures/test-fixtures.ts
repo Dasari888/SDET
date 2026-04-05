@@ -4,6 +4,8 @@ import { Rooms } from '../pages/Rooms';
 import { LocationCheck } from '../pages/components/LocationCheck';
 import { NotifyMe } from '../src/NotifyMe';
 import { SchedulerCheck } from '../src/SchedulerCheck';
+import { Forgotpassword } from '../pages/Forgotpassword';
+import { Page } from '@playwright/test';
 
 type MyFixtures = {
     loginPage: LoginPage;
@@ -11,10 +13,11 @@ type MyFixtures = {
     locationCheck: LocationCheck;
     notifyMe: NotifyMe;
     schedulerCheck: SchedulerCheck;
+    Forgotpassword:  Forgotpassword
 };
 
 export const test = base.extend<MyFixtures>({
-    loginPage: async ({ page }: { page: any }, use: any) => {
+    loginPage: async ({ page }: { page: Page }, use) => {
         await use(new LoginPage(page));
     },
     roomsPage: async ({ page }: { page: any }, use: any) => {
@@ -29,6 +32,9 @@ export const test = base.extend<MyFixtures>({
     schedulerCheck: async ({ page }: { page: any }, use: any) => {
         await use(new SchedulerCheck(page));
     },
+      Forgotpassword: async ({ page }:{ page: any }, use:any) => {
+    await use(new Forgotpassword(page));
+  }
 });
 
 export { expect } from '@playwright/test';

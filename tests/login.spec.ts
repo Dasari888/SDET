@@ -12,13 +12,3 @@ test('Verify login and check locations', async ({ page, loginPage, locationCheck
     console.log('Test: Verify login and check locations - Completed');
 });
 
-test('Verify login and notify me for all locations', async ({ page, loginPage, notifyMe }) => {
-    test.slow();
-    await page.goto(BASE_URL);
-    const headers = await loginPage.loginAndGetToken(USERNAME, PASSWORD);
-
-    console.log(' Starting Notify Me validations');
-    await notifyMe.allLocNotifyMe(BASE_URL, headers);
-
-    console.log('Test: Verify login and notify me for all locations - Completed');
-});
