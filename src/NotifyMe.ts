@@ -78,7 +78,7 @@ export class NotifyMe {
             await this.page.waitForTimeout(2000);
 
             console.log(" Navigating to Settings...");
-            const settingsBtn = this.page.locator("(//button[@class='mat-tooltip-trigger py-3 optsel'])[5]");
+            const settingsBtn = this.page.locator("div[class='sidebar'] div:nth-child(6)");
             await settingsBtn.waitFor({ state: 'attached' });
             await settingsBtn.click({ force: true });
             await this.page.waitForTimeout(3000);

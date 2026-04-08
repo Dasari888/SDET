@@ -78,7 +78,8 @@ export class LocationCheck {
         await this.page.locator("//button[.//mat-icon[@data-mat-icon-name='energy_line']]").click();
         await this.page.locator("(//button[@class='mat-tooltip-trigger py-3 optsel'])[1]").click(); // Home
         await this.page.locator("(//button[@class='mat-tooltip-trigger py-3 optsel'])[4]").click(); // Security
-        await this.page.locator("(//button[@class='mat-tooltip-trigger py-3 optsel'])[5]").click(); // Settings
+        // await this.page.locator("(//button[@class='mat-tooltip-trigger py-3 optsel'])[5]").click(); // Settings
+        await this.page.locator("div[class='sidebar'] div:nth-child(6)").click();
 
         // Profile tab
         await this.page.locator("//div[@routerlink='./profile']").click();

@@ -138,16 +138,19 @@ export class Rooms {
             // const deviceTab = this.page.locator(
             //     "(//button[contains(@class,'optsel')])[3]"
             // );
- const deviceTab = this.page.locator('button.optsel').nth(2);
+ const deviceTab = this.page.locator("div[class='sidebar'] div:nth-child(3)");
             await deviceTab.waitFor({ state: 'visible' });
             await deviceTab.click();
+            await this.page.waitForLoadState('domcontentloaded')
         // await this.page.waitForTimeout(1000);
             // ================= GET UI ROOM COUNT =================
 
             const roomHeaders = this.page.locator(
                 "//mat-expansion-panel-header[starts-with(@id,'mat-expansion-panel-header')]"
             );
-            await expect(roomHeaders.first()).toBeVisible();
+            if(roomIdsList.length>0){
+                            await expect(roomHeaders.first()).toBeVisible();}
+            // await this.page.waitForLoadState('domcontentloaded')
             const uiRoomCount = await roomHeaders.count();
 
             console.log(
@@ -157,19 +160,19 @@ export class Rooms {
 
             // ================= HANDLE NO ROOMS =================
 
-            // if (uiRoomCount === 0) {
-            //     console.log(`ℹ️ No rooms in UI for ${locName}`);
+            if (uiRoomCount === 0) {
+                console.log(`ℹ️ No rooms in UI for ${locName}`);
 
-            //     const homeTab = this.page.locator(
-            //         "(//button[contains(@class,'optsel')])[1]"
-            //     );
-            //     await homeTab.click();
+                const homeTab = this.page.locator(
+                    "(//button[contains(@class,'optsel')])[1]"
+                );
+                await homeTab.click();
 
-            //     continue;
-            // }
+                continue;
+            }
 
             // ================= CLICK EACH ROOM =================
-            // await this.page.waitForLoadState('networkidle');
+            await this.page.waitForLoadState('networkidle');
 
             for (let idx = 0; idx < uiRoomCount; idx++) {
                 try {
