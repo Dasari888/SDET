@@ -1,4 +1,5 @@
 import {test ,expect} from '../../fixtures/test-fixtures'
+import { Forgotpassword } from '../../pages/Forgotpassword';
 import {BASE_URL,USERNAME,PASSWORD} from '../../utils/test-data'
 
 
@@ -49,6 +50,37 @@ frontendinvalidemails.forEach(email=>{
     }
 )})
 
+
+test("login with invalid credentials ",async({page,Forgotpassword})=>{
+      await page.goto(BASE_URL);
+        await Forgotpassword.enterUsername(USERNAME);
+        await Forgotpassword.clickLogin();
+        await Forgotpassword.enterPassword("123fthui");
+        await Forgotpassword.clickFinalLogin();
+        const errorMsg = page.locator('.api-error');
+
+        await expect(errorMsg).toBeVisible();
+        await expect(errorMsg).toHaveText(
+        'Wrong password. Try again or click Forgot password to reset it.'
+);
+
+})
+
+test("login with empty Field", async ({ page, Forgotpassword }) => {
+  await page.goto(BASE_URL);
+
+  await Forgotpassword.enterUsername(USERNAME);
+  await Forgotpassword.clickLogin();
+
+  const passwordField = page.locator('input[type="password"]');
+  await passwordField.click();
+  await page.keyboard.press("Tab");
+//    await page.locator("//button[normalize-space()='Login']").click();
+//    console.log(" Clicked final login button");
+   await expect(page.getByText("Password is required")).toBeVisible();
+})
+
+  
     
 
 })

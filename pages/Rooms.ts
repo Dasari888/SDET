@@ -1,5 +1,6 @@
 import { Page, expect } from '@playwright/test';
 import { LocationCheck } from './components/LocationCheck';
+import { BASE_URL } from '../utils/test-data';
 
 export class Rooms {
     private page: Page;
@@ -138,11 +139,31 @@ export class Rooms {
             // const deviceTab = this.page.locator(
             //     "(//button[contains(@class,'optsel')])[3]"
             // );
- const deviceTab = this.page.locator("div[class='sidebar'] div:nth-child(3)");
-            await deviceTab.waitFor({ state: 'visible' });
-            await deviceTab.click();
-            await this.page.waitForLoadState('domcontentloaded')
+//  const HomeTab = this.page.locator("div[class='sidebar'] div:nth-child(1)");
+//             await HomeTab.waitFor({ state: 'visible' });
+//             await HomeTab.click();
+//             await this.page.waitForLoadState('domcontentloaded')
+
+
+
+//  const deviceTab = this.page.locator("div[class='sidebar'] div:nth-child(3)");
+    // const deviceTab = this.page.locator("//div[@class='sidebar']//div[3]");
+    //         await deviceTab.waitFor({ state: 'visible' });
+    //         await deviceTab.click();
+    //         await this.page.waitForLoadState('domcontentloaded')
         // await this.page.waitForTimeout(1000);
+
+
+// const deviceTab = this.page.locator("div[class='sidebar'] div:nth-child(3)");
+
+// await expect(deviceTab).toBeVisible();
+// await expect(deviceTab).toBeEnabled();
+
+// await deviceTab.click({ trial: true });
+// await deviceTab.click();
+await this.page.goto(`${BASE_URL}/#/dashboard/device`, {
+    waitUntil: 'networkidle'
+  });
             // ================= GET UI ROOM COUNT =================
 
             const roomHeaders = this.page.locator(
@@ -161,7 +182,7 @@ export class Rooms {
             // ================= HANDLE NO ROOMS =================
 
             if (uiRoomCount === 0) {
-                console.log(`ℹ️ No rooms in UI for ${locName}`);
+                console.log(` No rooms in UI for ${locName}`);
 
                 const homeTab = this.page.locator(
                     "(//button[contains(@class,'optsel')])[1]"
@@ -196,12 +217,13 @@ export class Rooms {
             console.log(` Returning to settings...`);
             
 
-            const homeTab = this.page.locator(
-                "(//button[contains(@class,'optsel')])[6]"
-            );
-            await homeTab.waitFor({ state: 'visible' });
-
-            await homeTab.click();
+            // const homeTab = this.page.locator(
+            //     "(//button[contains(@class,'optsel')])[6]"
+            // );
+            await this.page.goto(`${BASE_URL}/#/dashboard/settings`, {
+    waitUntil: 'networkidle'
+  });
+           
             // await expect(roomIdsList.length).toBe(uiRoomCount);
         }
     }

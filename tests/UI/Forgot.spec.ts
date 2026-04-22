@@ -1,6 +1,7 @@
 import { test, expect } from '../../fixtures/test-fixtures';
 import { BASE_URL,USERNAME,USERNAME3,PASSWORD,USERNAME2, Forgot_npassword,FP1,FP2,FP3,FP4,ForgotAuthorization,MAIL} from '../../utils/test-data';
-import { getOTP,getOTPWithRetry} from '../../src/otp';
+// import { getOTP,getOTPWithRetry} from '../../src/otp';
+import { getOTPWithRetry } from '../../src/otp';
 import { Forgotpassword } from '../../pages/Forgotpassword';
 import {Page} from '@playwright/test'
 // import { Page } from 'openai/pagination';
@@ -81,7 +82,7 @@ const backendInvalidEmails = [
 
   test('Verify mail sending limit reached', async ({ page, Forgotpassword,request}) => {
 
-    for (let i=0;i<5;i++){
+    for (let i=1;i<=6;i++){
       const response=await request.post(BASE_URL+'/v1/user/forgotpassword',{
         headers:{
         Authorization:`Basic ${ForgotAuthorization}`},
@@ -97,6 +98,7 @@ const backendInvalidEmails = [
     await Forgotpassword.clickLogin();
     await Forgotpassword.clickForgotPassword();
     await Forgotpassword.submitForgotPasswordEmail(USERNAME3);
+    await page.waitForLoadState('domcontentloaded')
     await expect(
       page.locator("text=Mail sending limit is reached, please try after 24 hours")
     ).toBeVisible();
@@ -126,23 +128,25 @@ test.describe.serial("@forgotFunctionality Forgot password Functionality Verific
   // });
 
   
-// test("code validation", async ({ page, Forgotpassword }) => {
+test("code validation", async ({ page, Forgotpassword }) => {
   
-//   await page.goto(BASE_URL);
-//   await Forgotpassword.enterUsername(USERNAME2);
-//   await Forgotpassword.clickLogin();
-//   await Forgotpassword.clickForgotPassword();
-//   await Forgotpassword.submitForgotPasswordEmail(USERNAME2);
-//   await page.waitForLoadState('domcontentloaded')
-//   const triggertime=Date.now()
-//   const otp = await getOTPWithRetry(triggertime);
-//   console.log(" Using OTP:", otp);
-//   await page.getByLabel(/Enter OTP/).fill(otp);
-//   console.log("otp is entered..........")
-//   await page.click('//input[@value="Verify"]'); 
-//    await page.waitForLoadState('domcontentloaded')
-//   await expect(page).toHaveURL(/changepassword/);
-// })
+  await page.goto(BASE_URL);
+  await Forgotpassword.enterUsername(MAIL);
+  await Forgotpassword.clickLogin();
+  await Forgotpassword.clickForgotPassword();
+  await Forgotpassword.submitForgotPasswordEmail(MAIL);
+  const triggertime=Date.now()
+  await page.waitForLoadState('domcontentloaded')
+  // const triggertime=Date.now()
+  const otp = await getOTPWithRetry(triggertime);
+  console.log(" Using OTP:", otp);
+  await page.getByLabel(/Enter OTP/).fill(otp);
+  console.log("otp is entered..........")
+  await page.click('//input[@value="Verify"]'); 
+   await page.waitForLoadState('domcontentloaded')
+   await page.waitForTimeout(3000);
+  await expect(page).toHaveURL(/changepassword/);
+})
 
 
 
@@ -162,10 +166,12 @@ test("@smoke  @forgot Successful Forgot Password Reset", async ({ page, Forgotpa
   await page.getByLabel(/Enter OTP/).fill(otp);
   console.log("otp is entered..........")
   await page.click('//input[@value="Verify"]'); 
-  await expect(page).not.toHaveURL(/changepassword/);
+  await page.waitForLoadState('domcontentloaded');
+  await page.waitForLoadState('networkidle');
    await Forgotpassword.newpassword(Forgot_npassword);
    await Forgotpassword.confirmpassword(Forgot_npassword);
    await Forgotpassword.resetButton();
+   await page.waitForLoadState('domcontentloaded')
    await expect(page.getByText("Your password has been changed successfully")).toBeVisible();
    
 })
@@ -187,7 +193,9 @@ test("@regression last three Passwords validation",async({page,request,Forgotpas
               "email_id": MAIL
           }
       })
-      expect(response.status()).toBe(200);
+      await expect(response.status()).toBe(200);
+      const responseData = await response.json();
+      await expect(responseData.status).toBe(1);
       console.log (await response.json());
       
   
@@ -245,12 +253,28 @@ test("@regression last three Passwords validation",async({page,request,Forgotpas
    await Forgotpassword.resetButton();
    await expect(page.getByText("Current password matches with one of the last three passwords")).toBeVisible();
       }
-      console.log(`@@@@@@@@@@@@@@@@ password setting for the attempt${i+1}`)
+      console.log(`@@@@@@@@@@@@@@@@ password setting for the attempt ${i+1} completed`)
   
 
 }
 
 })
+
+
+test("verify forgot password with invalid oTP",async({page,Forgotpassword})=>{
+  await page.goto(BASE_URL);
+  await Forgotpassword.enterUsername(MAIL);
+  await Forgotpassword.clickLogin();
+  await Forgotpassword.clickForgotPassword();
+  await Forgotpassword.submitForgotPasswordEmail(MAIL);
+   await Forgotpassword.enterOTP(12345);
+  console.log("otp is entered..........")
+  await page.click('//input[@value="Verify"]');
+
+  await expect( page.getByText("The Otp you have entered is incorrect")).toBeVisible;
+
+}
+)
 
 
 

@@ -31,8 +31,10 @@ export const Host=process.env.Host as string;
 
 
 
-export const  Forgot_npassword="BN#BBy78BNNBM9009";
-export const FP1="BNBBlaN#39NB90M09";
-export const FP2="BNBBaN#n0NB98M09";
-export const FP3="BNa#4B0NBM90809";
-export const FP4="BNBBla#4BkNNBMjkl09";
+export const  Forgot_npassword="BMzj#45NoM3MkmUupNKBIp";
+export const Forgot_npassword2="Bmoaz@N43B3";
+export const Forgot_npassword3="BN#BJfjhv6KyoJKOLlNKL9olB";
+export const FP1="Blpioze#547k3K00B";
+export const FP2="BlaIoze#54I73O7IpB";
+export const FP3="Bluaopze#5437UPPB";
+export const FP4="Blaioktze#5U43OP1Y7O5B";

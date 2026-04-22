@@ -166,6 +166,105 @@ test.describe("Login API Tests",()=>{
         expect(res.message).toBe("invalid parameters");
     });
 
+
+
+    test("Login with missing password", async ({ request }) => {
+        const response = await request.post(`${BASE_URL}/v1/user/login`, {
+            headers: {
+                Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`
+            },
+            data: {
+                email_id: USERNAME,
+                app_token: "token"
+            }
+        });
+        const res = await response.json();
+        expect(res.status).toBe(0);
+        expect(res.message).toBe("invalid parameters");
+    });
+    test("Login with missing app_token", async ({ request }) => {
+        const response = await request.post(`${BASE_URL}/v1/user/login`, {
+            headers: {
+                Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`
+            },
+            data: {
+                email_id: USERNAME,
+                password: BONEPLUS_DEV_HASHPASSWORD
+            }
+        });
+
+        const res = await response.json();
+        expect(res.status).toBe(0);
+    }); 
+    
+    test("Login with invalid Authorization header", async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/v1/user/login`, {
+        headers: {
+            Authorization: "Basic invalid_base64"
+        },
+        data: {
+            email_id: USERNAME,
+            password: BONEPLUS_DEV_HASHPASSWORD,
+            app_token: "tokeghjkn"
+        }
+    });
+
+    expect(response.status()).toBe(200);
+     const res = await response.json();
+    expect(res.status).toBe(0); });
+
+    test("Login without Authorization header", async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/v1/user/login`, {
+        data: {
+            email_id: USERNAME,
+            password: BONEPLUS_DEV_HASHPASSWORD,
+            app_token: "token"
+        }
+    });
+
+    expect(response.status()).toBe(200);
+    const res = await response.json();
+    expect(res.status).toBe(0); 
+});
+
+
+    test("Login with SQL injection payload", async ({ request }) => {
+        const response = await request.post(`${BASE_URL}/v1/user/login`, {
+            headers: {
+                Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`
+            },
+            data: {
+                email_id: "' OR 1=1 --",
+                password: "' OR 1=1 --",
+                app_token: "token"
+            }
+        });
+
+        const res = await response.json();
+        console.log("SQL Injection Test Response:", res);
+        expect(res.status).toBe(0);
+    });
+
+    test("Validate login response structure", async ({ request }) => {
+    const response = await request.post(`${BASE_URL}/v1/user/login`, {
+        headers: {
+            Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`
+        },
+        data: {
+            email_id: USERNAME,
+            password: BONEPLUS_DEV_HASHPASSWORD,
+            app_token: "token"
+        }
+    });
+
+    const res = await response.json();
+
+    expect(res).toHaveProperty("status");
+    expect(res).toHaveProperty("service");
+    expect(res).toHaveProperty("code");
+});
+    
+
     test.describe.serial("login with invalid and valid credentials", ()=>{
           test("Login with invalid password",async({request})=>{
         const response=await request.post(`${BASE_URL}/v1/user/login`,{

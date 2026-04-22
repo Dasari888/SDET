@@ -61,7 +61,7 @@ test("Successful password change",async({request})=>{
 })
 
 
-test ("@Api three passwords match",async({request})=>{
+test ("@Api Api three passwords match",async({request})=>{
     
     const Arr=[FP1,FP2,FP3,FP4];
 

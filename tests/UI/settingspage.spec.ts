@@ -62,7 +62,11 @@ test("validate Location Name in Location settings tab", async ({ page, request, 
 
   for (const loc of locations) {
     console.log(` Validating location: ${loc.name} (ID: ${loc.id})`);
-    await profilePage.openLocationFromSettings(loc.name);
+     await profilePage.openLocationFromSettings(loc.id);
+    // let uurl=`${BASE_URL}/#/dashboard/settings/locationsetting/${loc.id}/locationsetting1`
+    // console.log(uurl);
+    // await page.goto(uurl)
+   
      await page.waitForLoadState('networkidle'); 
      await page.waitForLoadState('domcontentloaded'); // Wait for UI to update with location details
 
@@ -94,7 +98,7 @@ test("validare location Country in Location settings tab", async ({ page, reques
 
   for (const loc of locations) {
     console.log(` Validating location: ${loc.name} (ID: ${loc.id})`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
       await page.waitForLoadState('networkidle');
       await page.waitForLoadState('domcontentloaded'); // Wait for UI to update with location details
        const locationcountryData = await locationAPI.getCompany(BASE_URL, headers, loc.countryId);
@@ -118,7 +122,7 @@ test("validare location Country in Location settings tab", async ({ page, reques
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const tzData = await locationAPI.getTimezone(BASE_URL, headers, loc.timezoneId);
     const apiName = tzData?.name;
     const apiOffset = tzData?.gmtOffsetName;
@@ -143,7 +147,7 @@ test("validate show cost in Location settings tab", async ({ page, request, logi
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);
     const apiShowCost = locationData.cost_in;
@@ -169,7 +173,7 @@ test ("validate show Show temperature in Location settings tab", async ({ page, 
   for (const loc of locations) {
 
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);
     const apiShowTemp = locationData.temp_in;
@@ -195,11 +199,14 @@ test ("validate Show environmental savings in location settings tab", async ({ p
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`); 
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);  
     const apiShowEnvSavings = locationData.env_in;
-    const expected = apiShowEnvSavings === "0" ? "CO₂" : "Trees";
+    console.log(apiShowEnvSavings)
+    console.log( apiShowEnvSavings.split('$')[0])
+    const expected =  apiShowEnvSavings.split('$')[0] === "0" ? "CO₂" : "Trees";
+    console.log(expected)
     const uiValue = await profilePage.getEnvsavingsin();
     console.log(`Expected show environmental savings: ${expected} | UI show environmental savings: ${uiValue}`);
     if (expected === "CO₂") {
@@ -224,7 +231,7 @@ test ("validate show fuel in the location settings tab", async ({ page, request,
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
 
     console.log("locationData", locationData);
@@ -258,7 +265,7 @@ test ("validate Device state retain time In-sec in location settings tab", async
   
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationPreferences(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);
     const apiRetainTime = locationData.mode;
@@ -292,7 +299,7 @@ test ("validate cost per kwh in location settings tab", async ({ page, request, 
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);
     const apiCostPerKwh = locationData.energy_in;
@@ -319,7 +326,7 @@ test ("validate feed in tariff in location settings tab", async ({ page, request
   console.log(`Total Locations: ${locations.length}`);
   for (const loc of locations) {
     console.log(`Validating: ${loc.name}`);
-    await profilePage.openLocationFromSettings(loc.name);
+    await profilePage.openLocationFromSettings(loc.id);
     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
     console.log("locationData", locationData);
     const apiFeedInTariff = locationData.energy_in;
@@ -344,14 +351,14 @@ test ("validate feed in tariff in location settings tab", async ({ page, request
 //   console.log(`Total Locations: ${locations.length}`);
 //   for (const loc of locations) {
 //     console.log(`Validating: ${loc.name}`);
-//     await profilePage.openLocationFromSettings(loc.name);
+//     await profilePage.openLocationFromSettings(loc.id);
 //     const locationData = await locationAPI.getLocationSettings(BASE_URL, headers, loc.id);
 //     console.log("locationData", locationData);
     
 //     const apiTreesPerKwh = locationData.env_in;
 //     let trees_in_value: string;
-//     if (apiTreesPerKwh.includes("$$")) {
-//       const parts = apiTreesPerKwh.split("$$");
+//     if (apiTreesPerKwh.includes("$")) {
+//       const parts = apiTreesPerKwh.split("$");
 //       trees_in_value = parts[parts.length - 1];
 //     } else {
 //       trees_in_value = apiTreesPerKwh;
