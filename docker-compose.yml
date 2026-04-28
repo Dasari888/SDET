@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  playwright-tests:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - IMAP_HOST=mail-server
+      - IMAP_PORT=1143
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+    depends_on:
+      - mail-server
+
+  mail-server:
+    image: axllent/mailpit
+    ports:
+      - "8025:8025" # Open this in your Windows browser to see the emails!
+      - "1143:1143"
